@@ -96,18 +96,19 @@ function load() {
   localStorage.setItem("timeToNet", timeToNet);
   
   let ss = 0;
-  while (confirm("Add a Sub Station")) {
+  while (true) {
     let subStation = prompt("Sub Station " + (ss + 1) + " Name", localStorage.getItem("subStation" + (ss + 1)) || "");
-	if (subStation != null) {
+	if (subStation != null && subStation != "") {
 	  subStations[ss] = subStation;
 	  localStorage.setItem("subStation" + (ss + 1), subStations[ss]);
 	  if (sss == "") {
 	    if (confirm("Click OK if this is the senior sub station")) {
 	      sss = subStations[ss];
 	      }
-        }
+            }
 	  ss++;
 	  }
+	else {break;}
 	if (ss + 1 > maxSubStations) {break;}
     }
   draw();
@@ -277,7 +278,6 @@ function add() {
     }
   draw();
   }
-//load();
 </script>
 </body>
 
