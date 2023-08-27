@@ -23,7 +23,7 @@ body {
   #printButton {
     display: none;
   }
-  #reloadButton {
+  #loadButton {
     display: none;
   }
   #removeButton {
@@ -35,17 +35,24 @@ body {
   #footer {
     display: none;
   }
+  #header {
+    display: none;
+  }
 }
 </style>
 </head>
 <body>
+<div id="header">
+This Radio Net Diagram creation page is brought to you by Tealetec.
+Click on the load button below.
+</div>
 <div id="canvasDiv">
 <canvas id="myCanvas" width="842" height="595" style="border:3px solid #000000;">
 Your browser does not support the HTML canvas tag.
 </canvas>
 </div>
 <div style="text-align:center; color:red;" id="footer">
-<button type="button" id="reloadButton" onClick="load();">Reload</button>
+<button type="button" id="loadButton" onClick="load();">Load</button>
 &copy; Tealetec 2023
 <button type="button" id="printButton" onClick="window.print();">Print</button>
 </div>
@@ -270,7 +277,7 @@ function add() {
     }
   draw();
   }
-load();
+//load();
 </script>
 </body>
 
