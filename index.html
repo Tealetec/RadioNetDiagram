@@ -1,283 +1,292 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DPSL3GC65R"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPSL3GC65R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-  gtag('config', 'G-DPSL3GC65R');
-</script>
-<title>Radio Net Diagram</title>
-<style>
-body {
-        height: 595px;
-        width: 842px;
-        margin-left: 0;
-        margin-right: auto;
-    }
-@media print {
-  @page {size: landscape}
-  #printButton {
-    display: none;
-  }
-  #loadButton {
-    display: none;
-  }
-  #removeButton {
-    display: none;
-  }
-  #addButton {
-    display: none;
-  }
-  #footer {
-    display: none;
-  }
-  #header {
-    display: none;
-  }
-}
-</style>
+        gtag('config', 'G-DPSL3GC65R');
+    </script>
+    <title>Radio Net Diagram</title>
+    <style>
+        body {
+            height: 595px;
+            width: 842px;
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        @media print {
+            @page {
+                size: landscape
+            }
+
+            #printButton {
+                display: none;
+            }
+
+            #loadButton {
+                display: none;
+            }
+
+            #removeButton {
+                display: none;
+            }
+
+            #addButton {
+                display: none;
+            }
+
+            #footer {
+                display: none;
+            }
+
+            #header {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div id="header" style="text-align:center; color:red;">
-    <button type="button" id="loadButton" onClick="load();">Load</button>
-    This Radio Net Diagram creation page is brought to you by Tealetec.
-    Click on the load button.
-    <button type="button" id="printButton" onClick="window.print();">Print</button>
-  </div>
-  <div id="canvasDiv">
-    <canvas id="myCanvas" width="842" height="595" style="border:3px solid #000000;">
-      Your browser does not support the HTML canvas tag.
-    </canvas>
-  </div>
-  <div id="footer" style="text-align:center; color:red;">
-    <button type="button" id="loadButton" onClick="load();">Load</button>
-    &copy; Tealetec 2023
-    <button type="button" id="printButton" onClick="window.print();">Print</button>
-  </div>
+    <div id="header" style="text-align:center; color:red;">
+        <button type="button" id="loadButton" onClick="load();">Load</button>
+        This Radio Net Diagram creation page is brought to you by Tealetec.
+        Click on the load button.
+        <button type="button" id="printButton" onClick="window.print();">Print</button>
+    </div>
+    <div id="canvasDiv">
+        <canvas id="myCanvas" width="842" height="595" style="border:3px solid #000000;">
+            Your browser does not support the HTML canvas tag.
+        </canvas>
+    </div>
+    <div id="footer" style="text-align:center; color:red;">
+        <button type="button" id="loadButton" onClick="load();">Load</button>
+        &copy; Tealetec 2023
+        <button type="button" id="printButton" onClick="window.print();">Print</button>
+    </div>
 
-<script>
-  const c = document.getElementById("myCanvas");
-  const cWidth =  c.width;
-  const cHeight = c.height;
-  const ctx = c.getContext("2d");
-  const border = 5;
-  const headerHeight = 20;
-  const infoRows = 5;
-  const infoRowHeight = 20;
-  const infoRowWidth = 200;
-  const stationRadius = 75;
-  const maxSubStations = 6;
-  
-  const subStations = [];
-  let numberOfStations = 0;  
+    <script>
+        const c = document.getElementById("myCanvas");
+        const cWidth = c.width;
+        const cHeight = c.height;
+        const ctx = c.getContext("2d");
+        const border = 5;
+        const headerHeight = 20;
+        const infoRows = 5;
+        const infoRowHeight = 20;
+        const infoRowWidth = 200;
+        const stationRadius = 75;
+        const maxSubStations = 6;
 
-  let netCallSign = "";
-  let base = "";
-  let channel = "";
-  let altChannel = "";
-  let timeToNet = "";
-  let sss = "";
+        const subStations = [];
+        let numberOfStations = 0;
 
-function load() {
-  netCallSign = prompt("Net Call Sign", localStorage.getItem("netCallSign") || "VKW200");
-  localStorage.setItem("netCallSign", netCallSign);
-  base = prompt("Net Control Station", localStorage.getItem("base") || "Mundaring Base");
-  localStorage.setItem("base", base);
-  channel = prompt("Primary Channel", localStorage.getItem("channel") || "VHF xxx");
-  localStorage.setItem("channel", channel);
-  altChannel = prompt("Secondary Channel", localStorage.getItem("altChannel") || "VHF xxx");
-  localStorage.setItem("altChannel", altChannel);
-  timeToNet = prompt("Time to Net", localStorage.getItem("timeToNet") || "00:00");
-  localStorage.setItem("timeToNet", timeToNet);
-  
-  let ss = 0;
-  while (true) {
-    let subStation = prompt("Sub Station " + (ss + 1) + " Name", localStorage.getItem("subStation" + (ss + 1)) || "");
-	if (subStation != null && subStation != "") {
-	  subStations[ss] = subStation;
-	  localStorage.setItem("subStation" + (ss + 1), subStations[ss]);
-	  if (sss == "") {
-	    if (confirm("Click OK if this is the senior sub station")) {
-	      sss = subStations[ss];
-	      }
+        let netCallSign = "";
+        let base = "";
+        let channel = "";
+        let altChannel = "";
+        let timeToNet = "";
+        let sss = "";
+
+        function load() {
+            netCallSign = prompt("Net Call Sign", localStorage.getItem("netCallSign") || "VKW200");
+            localStorage.setItem("netCallSign", netCallSign);
+            base = prompt("Net Control Station", localStorage.getItem("base") || "Mundaring Base");
+            localStorage.setItem("base", base);
+            channel = prompt("Primary Channel", localStorage.getItem("channel") || "VHF xxx");
+            localStorage.setItem("channel", channel);
+            altChannel = prompt("Secondary Channel", localStorage.getItem("altChannel") || "VHF xxx");
+            localStorage.setItem("altChannel", altChannel);
+            timeToNet = prompt("Time to Net", localStorage.getItem("timeToNet") || "00:00");
+            localStorage.setItem("timeToNet", timeToNet);
+
+            let ss = 0;
+            while (true) {
+                let subStation = prompt("Sub Station " + (ss + 1) + " Name", localStorage.getItem("subStation" + (ss + 1)) || "");
+                if (subStation != null && subStation != "") {
+                    subStations[ss] = subStation;
+                    localStorage.setItem("subStation" + (ss + 1), subStations[ss]);
+                    if (sss == "") {
+                        if (confirm("Click OK if this is the senior sub station")) {
+                            sss = subStations[ss];
+                        }
+                    }
+                    ss++;
+                }
+                else { break; }
+                if (ss + 1 > maxSubStations) { break; }
             }
-	  ss++;
-	  }
-	else {break;}
-	if (ss + 1 > maxSubStations) {break;}
-    }
-  draw();
-  }
-  
-function draw() {
-  ctx.clearRect(0,0,cWidth,cHeight);
-  let removeBtn = null;
-  let addBtn = null;
-  while (true){
-    removeBtn = document.getElementById("removeButton");
-	if (removeBtn == null) {break;}
-	removeBtn.remove();
-    }
-  addBtn = document.getElementById("addButton"); 
-  if (addBtn != null) {addBtn.remove();}
+            draw();
+        }
 
-  let d = new Date();
-  let opposite = (cWidth/2)-(border+stationRadius);
-  let adjasent = (cHeight-border-stationRadius)-(cHeight/2);
-/* Distance between center point of base and center point of station */
-  let hypot = Math.sqrt(Math.pow(opposite,2) + Math.pow(adjasent,2));
-/* Max angle for first station */
-  let angleExtreme = Math.atan2(adjasent,opposite);
-  
-  numberOfStations = subStations.length;
-    
-  /* Draw Header Box */
-  ctx.beginPath();
-  ctx.strokeRect(0+border, 0+border, cWidth-border*2, headerHeight); 
-  ctx.stroke();
-  
-  ctx.font = "15px Comic Sans MS";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("Radio Net Diagram", cWidth/2, border+headerHeight/2);
-  ctx.stroke();
-  ctx.textAlign = "left";
-  ctx.fillText(d.toDateString(), border*2, border+headerHeight/2);
-  ctx.stroke();
-  ctx.font = "10px Comic Sans MS";
-  ctx.textAlign = "right";
-  ctx.fillText(d.toTimeString(), cWidth-border*2, border+headerHeight/2);
-  ctx.stroke();
+        function draw() {
+            ctx.clearRect(0, 0, cWidth, cHeight);
+            let removeBtn = null;
+            let addBtn = null;
+            while (true) {
+                removeBtn = document.getElementById("removeButton");
+                if (removeBtn == null) { break; }
+                removeBtn.remove();
+            }
+            addBtn = document.getElementById("addButton");
+            if (addBtn != null) { addBtn.remove(); }
 
-/* Draw Info Panel */
-  ctx.beginPath();
-  ctx.strokeRect(cWidth-border-infoRowWidth, cHeight-border-infoRowHeight*(infoRows+1), infoRowWidth, infoRowHeight*(infoRows+1)); 
-  ctx.stroke();
-  
-  ctx.font = "10px Comic Sans MS";
-  ctx.textAlign = "left";
-  ctx.textBaseline = "bottom";
-  ctx.fillText("Net Callsign: " + netCallSign, cWidth-border-infoRowWidth+border , cHeight-border-infoRowHeight*(infoRows-0));
-  ctx.stroke();
-  ctx.fillText("Net Control Station: " + base, cWidth-border-infoRowWidth+border , cHeight-border-infoRowHeight*(infoRows-1));
-  ctx.stroke();
-  ctx.fillText("Senior Sub-Station: " + sss, cWidth-border-infoRowWidth+border , cHeight-border-infoRowHeight*(infoRows-2));
-  ctx.stroke();
-  ctx.fillText("Channel: " + channel, cWidth-border-infoRowWidth+border , cHeight-border-infoRowHeight*(infoRows-3));
-  ctx.stroke();
-  ctx.fillText("Alt Channel: " + altChannel, cWidth-border-infoRowWidth+border , cHeight-border-infoRowHeight*(infoRows-4));
-  ctx.stroke();
-  ctx.fillText("Time to Net: " + timeToNet, cWidth-border-infoRowWidth+border , cHeight-border-infoRowHeight*(infoRows-5));
-  ctx.stroke();
-  
-/* Add "Add another sub-station" button */
-  if (subStations.length < maxSubStations) {
-    addAddButton(cWidth-border-infoRowWidth, cHeight-border*5-infoRowHeight*(infoRows+1) ,"Add another sub-station");
-    }
-  
-/* Draw Base circle */
-  let baseX = cWidth/2;
-  let baseY = cHeight-border-stationRadius;
-  ctx.beginPath();
-  ctx.arc(baseX, baseY, stationRadius, 0, Math.PI*2);
-  ctx.stroke();
-  ctx.font = "12px Comic Sans MS";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(base, baseX, baseY);
-  ctx.stroke();
-  
-/* Draw x aditional circles */
-  subStations.sort((a,b) => a.localeCompare(b));
-  let angleRange = Math.PI - 2*angleExtreme;
-  let angleIncrement = 0;
-  if (numberOfStations == 1) {
-    angleIncrement = angleRange/2;
-	}
-  else {
-    angleIncrement = angleRange/(numberOfStations-1);
-	}
-  let angle = 0;
-  let stationX = stationY = 0;
-  let baseIntersectX = baseIntersectY = 0;
-  let stationIntersectX = stationIntersectY = 0;
-  for (let i = 1; i < numberOfStations + 1; i++) {
-	if (numberOfStations == 1) {
-      angle = angleExtreme + angleIncrement;
-	  }
-    else {
-      angle = angleExtreme + (numberOfStations - i)*angleIncrement;
-	  }
-	stationX = baseX + hypot*Math.cos(angle);
-	stationY = baseY - hypot*Math.sin(angle);
-	baseIntersectX = baseX + stationRadius*Math.cos(angle);
-	baseIntersectY = baseY - stationRadius*Math.sin(angle);
-	stationIntersectX = stationX + stationRadius*Math.cos(angle+Math.PI);
-	stationIntersectY = stationY - stationRadius*Math.sin(angle+Math.PI);
-	
-    ctx.beginPath();
-    ctx.arc(stationX, stationY, stationRadius, 0, Math.PI*2);
-    ctx.stroke();
-    ctx.font = "12px Comic Sans MS";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(subStations[i-1] , stationX, stationY);
-    ctx.stroke();
-	let string = "Remove " + subStations[i-1];
-	addRemoveButton(i-1,stationX-stationRadius,stationY+stationRadius/2,string);
-  
-    ctx.beginPath();
-    ctx.moveTo(baseIntersectX, baseIntersectY);
-    ctx.lineTo(stationIntersectX, stationIntersectY);
-    ctx.stroke();
-    }
-  }
- 
-function addRemoveButton(ss,x,y,text) {
-  let btn = document.createElement("button");
-  let t = document.createTextNode(text);
-  
-  btn.setAttribute("style","position:absolute; top:" + y + "px; left:" + x + "px;");
-  btn.setAttribute("id","removeButton");
-  btn.setAttribute("onClick", "remove(" + ss + ");");
-  btn.appendChild(t);
-  
-  let div = document.getElementById("canvasDiv");
-  div.appendChild(btn);
-  }
-  
-function addAddButton(x,y,text) {
-  let btn = document.createElement("button");
-  let t = document.createTextNode(text);
-  
-  btn.setAttribute("style","position:absolute; top:" + y + "px; left:" + x + "px;");
-  btn.setAttribute("id","removeButton");
-  btn.setAttribute("onClick", "add();");
-  btn.appendChild(t);
-  
-  let div = document.getElementById("canvasDiv");
-  div.appendChild(btn);
-  }
+            let d = new Date();
+            let opposite = (cWidth / 2) - (border + stationRadius);
+            let adjasent = (cHeight - border - stationRadius) - (cHeight / 2);
+            /* Distance between center point of base and center point of station */
+            let hypot = Math.sqrt(Math.pow(opposite, 2) + Math.pow(adjasent, 2));
+            /* Max angle for first station */
+            let angleExtreme = Math.atan2(adjasent, opposite);
 
-function remove(ss) {
-  subStations.splice(ss,1);
-  draw();
-  }
-  
-function add() {
-  let ss = subStations.length;
-  let subStation = prompt("Sub Station " + (ss + 1) + " Name", localStorage.getItem("subStation" + (ss + 1)) || "");
-  if (subStation != null) {
-	subStations.push(subStation);
-	localStorage.setItem("subStation" + (ss + 1), subStations[ss]);
-    }
-  draw();
-  }
-</script>
+            numberOfStations = subStations.length;
+
+            /* Draw Header Box */
+            ctx.beginPath();
+            ctx.strokeRect(0 + border, 0 + border, cWidth - border * 2, headerHeight);
+            ctx.stroke();
+
+            ctx.font = "15px Comic Sans MS";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("Radio Net Diagram", cWidth / 2, border + headerHeight / 2);
+            ctx.stroke();
+            ctx.textAlign = "left";
+            ctx.fillText(d.toDateString(), border * 2, border + headerHeight / 2);
+            ctx.stroke();
+            ctx.font = "10px Comic Sans MS";
+            ctx.textAlign = "right";
+            ctx.fillText(d.toTimeString(), cWidth - border * 2, border + headerHeight / 2);
+            ctx.stroke();
+
+            /* Draw Info Panel */
+            ctx.beginPath();
+            ctx.strokeRect(cWidth - border - infoRowWidth, cHeight - border - infoRowHeight * (infoRows + 1), infoRowWidth, infoRowHeight * (infoRows + 1));
+            ctx.stroke();
+
+            ctx.font = "10px Comic Sans MS";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "bottom";
+            ctx.fillText("Net Callsign: " + netCallSign, cWidth - border - infoRowWidth + border, cHeight - border - infoRowHeight * (infoRows - 0));
+            ctx.stroke();
+            ctx.fillText("Net Control Station: " + base, cWidth - border - infoRowWidth + border, cHeight - border - infoRowHeight * (infoRows - 1));
+            ctx.stroke();
+            ctx.fillText("Senior Sub-Station: " + sss, cWidth - border - infoRowWidth + border, cHeight - border - infoRowHeight * (infoRows - 2));
+            ctx.stroke();
+            ctx.fillText("Channel: " + channel, cWidth - border - infoRowWidth + border, cHeight - border - infoRowHeight * (infoRows - 3));
+            ctx.stroke();
+            ctx.fillText("Alt Channel: " + altChannel, cWidth - border - infoRowWidth + border, cHeight - border - infoRowHeight * (infoRows - 4));
+            ctx.stroke();
+            ctx.fillText("Time to Net: " + timeToNet, cWidth - border - infoRowWidth + border, cHeight - border - infoRowHeight * (infoRows - 5));
+            ctx.stroke();
+
+            /* Add "Add another sub-station" button */
+            if (subStations.length < maxSubStations) {
+                addAddButton(cWidth - border - infoRowWidth, cHeight - border * 5 - infoRowHeight * (infoRows + 1), "Add another sub-station");
+            }
+
+            /* Draw Base circle */
+            let baseX = cWidth / 2;
+            let baseY = cHeight - border - stationRadius;
+            ctx.beginPath();
+            ctx.arc(baseX, baseY, stationRadius, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.font = "12px Comic Sans MS";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(base, baseX, baseY);
+            ctx.stroke();
+
+            /* Draw x aditional circles */
+            subStations.sort((a, b) => a.localeCompare(b));
+            let angleRange = Math.PI - 2 * angleExtreme;
+            let angleIncrement = 0;
+            if (numberOfStations == 1) {
+                angleIncrement = angleRange / 2;
+            }
+            else {
+                angleIncrement = angleRange / (numberOfStations - 1);
+            }
+            let angle = 0;
+            let stationX = stationY = 0;
+            let baseIntersectX = baseIntersectY = 0;
+            let stationIntersectX = stationIntersectY = 0;
+            for (let i = 1; i < numberOfStations + 1; i++) {
+                if (numberOfStations == 1) {
+                    angle = angleExtreme + angleIncrement;
+                }
+                else {
+                    angle = angleExtreme + (numberOfStations - i) * angleIncrement;
+                }
+                stationX = baseX + hypot * Math.cos(angle);
+                stationY = baseY - hypot * Math.sin(angle);
+                baseIntersectX = baseX + stationRadius * Math.cos(angle);
+                baseIntersectY = baseY - stationRadius * Math.sin(angle);
+                stationIntersectX = stationX + stationRadius * Math.cos(angle + Math.PI);
+                stationIntersectY = stationY - stationRadius * Math.sin(angle + Math.PI);
+
+                ctx.beginPath();
+                ctx.arc(stationX, stationY, stationRadius, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.font = "12px Comic Sans MS";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(subStations[i - 1], stationX, stationY);
+                ctx.stroke();
+                let string = "Remove " + subStations[i - 1];
+                addRemoveButton(i - 1, stationX - stationRadius, stationY + stationRadius / 2, string);
+
+                ctx.beginPath();
+                ctx.moveTo(baseIntersectX, baseIntersectY);
+                ctx.lineTo(stationIntersectX, stationIntersectY);
+                ctx.stroke();
+            }
+        }
+
+        function addRemoveButton(ss, x, y, text) {
+            let btn = document.createElement("button");
+            let t = document.createTextNode(text);
+
+            btn.setAttribute("style", "position:absolute; top:" + y + "px; left:" + x + "px;");
+            btn.setAttribute("id", "removeButton");
+            btn.setAttribute("onClick", "remove(" + ss + ");");
+            btn.appendChild(t);
+
+            let div = document.getElementById("canvasDiv");
+            div.appendChild(btn);
+        }
+
+        function addAddButton(x, y, text) {
+            let btn = document.createElement("button");
+            let t = document.createTextNode(text);
+
+            btn.setAttribute("style", "position:absolute; top:" + y + "px; left:" + x + "px;");
+            btn.setAttribute("id", "removeButton");
+            btn.setAttribute("onClick", "add();");
+            btn.appendChild(t);
+
+            let div = document.getElementById("canvasDiv");
+            div.appendChild(btn);
+        }
+
+        function remove(ss) {
+            subStations.splice(ss, 1);
+            draw();
+        }
+
+        function add() {
+            let ss = subStations.length;
+            let subStation = prompt("Sub Station " + (ss + 1) + " Name", localStorage.getItem("subStation" + (ss + 1)) || "");
+            if (subStation != null) {
+                subStations.push(subStation);
+                localStorage.setItem("subStation" + (ss + 1), subStations[ss]);
+            }
+            draw();
+        }
+    </script>
 </body>
 
 </html>
