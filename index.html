@@ -42,31 +42,22 @@ body {
 </style>
 </head>
 <body>
-<div id="header" style="text-align:center; color:red;">
-	<div style="text-align:left;">
-	<button type="button" id="loadButton" onClick="load();">Load</button>
-	</div>
-	<div style="text-align:center;">
-This Radio Net Diagram creation page is brought to you by Tealetec.
-Click on the load button.
-	</div>
-	<div style="text-align:right;">
-	<button type="button" id="printButton" onClick="window.print();">Print</button>
-	</div>
-</div>
-<div id="canvasDiv">
-<canvas id="myCanvas" width="842" height="595" style="border:3px solid #000000;">
-Your browser does not support the HTML canvas tag.
-</canvas>
-</div>
-<div id="footer" style="text-align:center; color:red;">
-<button type="button" id="loadButton" onClick="load();">Load</button>
-&copy; Tealetec 2023
-<button type="button" id="printButton" onClick="window.print();">Print</button>
-</div>
-<div >
-
-</div>
+  <div id="header" style="text-align:center; color:red;">
+    <button type="button" id="loadButton" onClick="load();">Load</button>
+    This Radio Net Diagram creation page is brought to you by Tealetec.
+    Click on the load button.
+    <button type="button" id="printButton" onClick="window.print();">Print</button>
+  </div>
+  <div id="canvasDiv">
+    <canvas id="myCanvas" width="842" height="595" style="border:3px solid #000000;">
+      Your browser does not support the HTML canvas tag.
+    </canvas>
+  </div>
+  <div id="footer" style="text-align:center; color:red;">
+    <button type="button" id="loadButton" onClick="load();">Load</button>
+    &copy; Tealetec 2023
+    <button type="button" id="printButton" onClick="window.print();">Print</button>
+  </div>
 
 <script>
   const c = document.getElementById("myCanvas");
