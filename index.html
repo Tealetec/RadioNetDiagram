@@ -18,17 +18,21 @@
             margin-left: 0;
             margin-right: auto;
         }
-        .copyright {
-            width: 200px;
-            height: 40px;
-            line-height: 40px;
+        button {
+            min-width: 30px;
+            min-height: 20px;
+            line-height: 20px;
             text-align: center;
-            margin: auto;
+            margin: 5px;
             background: linear-gradient(DarkCyan, DarkTurquoise, DarkCyan);
             border-radius: 10px;
             border: 1px solid black;
         }
-        button {
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+        .copyright {
             width: 200px;
             height: 40px;
             line-height: 40px;
@@ -75,18 +79,25 @@
     </style>
 </head>
 <body>
-    <div id="header" style="text-align:center; color:red;">
-        <button type="button" id="loadButton" onClick="load();">Load</button>
-        This Radio Net Diagram creation page is brought to you by Tealetec.
-        Click on the load button.
-        <button type="button" id="printButton" onClick="window.print();">Print</button>
+    <div class="row">
+        <div>
+            <button type="button" id="loadButton" onClick="load();">Load</button>
+        </div>  
+        <div id="header" style="text-align:center; margin: auto 5px;">
+            This Radio Net Diagram creation page is brought to you by Tealetec.
+            <br />
+            Click on the load button.
+        </div>
+        <div>
+            <button type="button" id="printButton" onClick="window.print();">Print</button>
+        </div>
     </div>
     <div id="canvasDiv">
         <canvas id="myCanvas" width="842" height="595" style="border:3px solid #000000;">
             Your browser does not support the HTML canvas tag.
         </canvas>
     </div>
-    <div id="footer" style="text-align:center; color:red;">
+    <div id="footer" style="text-align:center;">
         <button type="button" id="loadButton" onClick="load();">Load</button>
         <button type="button" id="printButton" onClick="window.print();">Print</button>
     </div>
