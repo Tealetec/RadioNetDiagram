@@ -28,6 +28,16 @@
             border-radius: 10px;
             border: 1px solid black;
         }
+        button {
+            width: 200px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            margin: auto;
+            background: linear-gradient(DarkCyan, DarkTurquoise, DarkCyan);
+            border-radius: 10px;
+            border: 1px solid black;
+        }
         @media print {
             @page {
                 size: landscape
@@ -78,7 +88,6 @@
     </div>
     <div id="footer" style="text-align:center; color:red;">
         <button type="button" id="loadButton" onClick="load();">Load</button>
-        &copy; Tealetec 2023
         <button type="button" id="printButton" onClick="window.print();">Print</button>
     </div>
 
